@@ -17,13 +17,24 @@ flowchart TD
     F --> G["timed reference trajectory"]
     G --> H["NMPC + CBF execution"]
     H --> I["verifier"]
-    I --> J["JSON + PNG outputs"]
+    I --> J{"pass?"}
+    J -- "yes" --> K["final JSON + PNG outputs"]
+    J -- "no, if refinement turns remain" --> L["verifier feedback"]
+    L --> B
+    J -- "no, final trial" --> M["failed JSON + PNG outputs"]
+    M --> N["optional required-time estimate"]
 ```
 
 The LLM is responsible for high-level route decisions such as target order,
 charging stops, obstacle detours, and final routing. It is not trusted to produce
 dynamically feasible timestamps. Timing, execution, and verification are handled
 by local optimization and checking code.
+
+The refinement loop is verifier-driven. If a trial fails and refinement turns
+remain, the verifier reason is appended as feedback to the next LLM call. With
+the default `max_refinement_turns=2`, the pipeline can run up to three LLM
+trials total. Required-time estimation is only attached on the final failed trial
+when that option is enabled.
 
 ## Are NMPC, CBF, and Retiming Used?
 
