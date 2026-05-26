@@ -1,4 +1,4 @@
-# LLM + Retiming + NMPC/CBF Crazyflie Mission Planner
+<img width="3283" height="2241" alt="spiderpi_effective_replan_overlap_original_only" src="https://github.com/user-attachments/assets/1c5e3619-98dd-4b5e-8669-664cbfa6f5fc" /># LLM + Retiming + NMPC/CBF Crazyflie Mission Planner
 
 This repository implements a research pipeline for multi-agent Crazyflie mission
 planning and execution. An LLM proposes sparse mission-level waypoints, and the
@@ -252,6 +252,11 @@ the remaining target for cf1, sends cf2 directly to its final goal, stays above
 the battery floor, satisfies the timing check, and avoids the SpiderPi reachable
 danger region.
 
+<img width="3283" height="2241" alt="spiderpi_effective_replan_overlap_original_only" src="https://github.com/user-attachments/assets/0537b39c-7da3-40a1-85d6-e9d4017d0d5e" />
+
+
+https://github.com/user-attachments/assets/a360f341-8136-4517-af23-eb1f899ea12d
+
 ## Battery Model
 
 The verifier uses a simple mission-level battery model:
@@ -453,7 +458,4 @@ python Two_drone_tracking.py --dry-run --problem-id MA4 --reuse-existing-llm-tra
 Old JSON artifacts may contain results from older verifier or battery logic. After
 changing code, regenerate trajectory JSON files before drawing conclusions from
 verification output.
-
-
-https://github.com/user-attachments/assets/a360f341-8136-4517-af23-eb1f899ea12d
 
