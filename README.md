@@ -68,6 +68,53 @@ checks the retimed reference instead of an NMPC/CBF-executed trajectory.
 The default `cascade` backend uses `nmpc_cbf.py`. The optional `full` backend
 uses `full_motor_nmpc.py`, requires CasADi/IPOPT, and is much slower.
 
+## What Retiming Does
+
+Retiming is a pre-processing step before NMPC/CBF execution. It does not change
+the geometric route. Given a smoothed path such as:
+
+```text
+P0 -> P1 -> P2 -> P3
+```
+
+retiming keeps the same waypoint positions and reassigns their timestamps:
+
+```text
+t0, t1, t2, t3
+```
+
+The goal is to make the fixed geometry satisfy the requested mission time and
+the problem's velocity, acceleration, jerk, snap, and curvature limits. After
+retiming succeeds, the NMPC/CBF backend tracks the retimed reference trajectory.
+If retiming reports infeasibility, NMPC/CBF is skipped for that trial.
+
+## Required-Time Estimation
+
+The pipeline can estimate how much mission time may be required when the final
+LLM refinement trial still fails. This estimate is only attached on the final
+failed trial, not after every failed attempt.
+
+For direct `tool_pipeline.py` runs, enable it with:
+
+```powershell
+python tool_pipeline.py --problem-id MA4 --estimate-required-time
+```
+
+For `Two_drone_tracking.py`, both the initial LLM plan and SpiderPi live replan
+call the refinement pipeline with required-time estimation enabled. With the
+default `max_refinement_turns=2`, this means the estimate can appear after the
+third failed trial.
+
+The result is written under:
+
+```text
+verification.details.nmpc_time_feasibility
+```
+
+This estimate answers a narrow question: for the same route geometry, how much
+more time might NMPC execution need? It does not automatically fix a route that
+misses targets, starts below the battery floor, or collides with an obstacle.
+
 ## Quick Start
 
 ### Run the LLM refinement pipeline
