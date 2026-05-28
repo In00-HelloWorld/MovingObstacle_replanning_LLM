@@ -310,8 +310,7 @@ the remaining target for cf1, sends cf2 directly to its final goal, stays above
 the battery floor, satisfies the timing check, and avoids the SpiderPi reachable
 danger region.
 
-<img width="3283" height="2241" alt="spiderpi_effective_replan_overlap_original_only" src="https://github.com/user-attachments/assets/0537b39c-7da3-40a1-85d6-e9d4017d0d5e" />
-
+<img width="3497" height="2171" alt="spiderpi_effective_multiview_replanned_ref_legend" src="https://github.com/user-attachments/assets/d5174e18-214c-4c77-b338-4d18bd82849e" />
 
 https://github.com/user-attachments/assets/a360f341-8136-4517-af23-eb1f899ea12d
 
